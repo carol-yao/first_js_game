@@ -66,7 +66,7 @@
       dy = -dy;
       colour = "purple";
     } else if(y + dy > canvas.height-ballRadius) {
-      if (x > paddleWidth && x < paddleWidth + paddleX) {
+      if (x > paddleX && x < paddleWidth + paddleX) {
         dy = -dy;
         colour = "green";
       } else {
