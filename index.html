@@ -56,14 +56,24 @@
     x += dx;
     y += dy;
 
+
     if(x + dx > (canvas.width - ballRadius)|| x + dx < ballRadius) {
       dx = -dx;
       colour = "blue"
     }
 
-    if(y + dy > (canvas.height - ballRadius)|| y + dy < ballRadius) {
+    if(y + dy < ballRadius) {
       dy = -dy;
       colour = "purple";
+    } else if(y + dy > canvas.height-ballRadius) {
+      if (x > paddleWidth && x < paddleWidth + paddleX) {
+        dy = -dy;
+        colour = "green";
+      } else {
+        alert("GAME OVER");
+        document.location.reload();
+      }
+
     }
 
     if(rightPressed && paddleX < canvas.width-paddleWidth) {
