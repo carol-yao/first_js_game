@@ -22,23 +22,38 @@
   var dx = 2;
   var dy = -2;
 
-
-  function drawBall() {
+  var ballRadius = 10;
+  var colour = 'red'
+  function drawBall(colour) {
     ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI*2);
-    ctx.fillStyle = "red";
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = colour;
     ctx.fill();
     ctx.closePath();
   }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
+    drawBall(colour);
+
     x += dx;
     y += dy;
+
+    if(x + dx > (canvas.width - ballRadius)|| x + dx < ballRadius) {
+      dx = -dx;
+      colour = "blue"
+    }
+
+    if(y + dy > (canvas.height - ballRadius)|| y + dy < ballRadius) {
+      dy = -dy;
+      colour = "purple"
+    }
+
   }
 
   setInterval(draw, 10);
+
+
 </script>
 
 </body>
