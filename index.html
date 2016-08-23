@@ -42,6 +42,7 @@
 
   var bricks = [];
   var score = 0;
+  var lives = 3;
 
   for (c=0; c < brickColumnCount; c++) {
     bricks[c] = [];
@@ -110,12 +111,19 @@
     ctx.fillText("Score: "+score, 8, 20);
   };
 
+  function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+  };
+
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBall(colour);
     drawPaddle();
     drawScore();
+    drawLives();
     collisionDetection();
 
     x += dx;
@@ -135,8 +143,18 @@
         dy = -dy;
         colour = "green";
       } else {
-        alert("GAME OVER");
-        document.location.reload();
+        lives--;
+          if(!lives) {
+              alert("GAME OVER");
+              document.location.reload();
+          }
+          else {
+              x = canvas.width/2;
+              y = canvas.height-30;
+              dx = 2;
+              dy = -2;
+              paddleX = (canvas.width-paddleWidth)/2;
+          }
       }
 
     }
@@ -168,6 +186,23 @@
     }
     else if(e.keyCode == 37) {
         leftPressed = false;
+    }
+  }
+
+  document.addEventListener("mousemove", mouseMoveHandler, false);
+
+  function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+      var position = relativeX - paddleWidth/2;
+      if (position < 0 ) {
+        paddleX = 0;
+      } else if (position > canvas.width - paddleWidth) {
+        paddleX = canvas.width - paddleWidth;
+      } else {
+        paddleX = relativeX - paddleWidth/2;
+      }
+
     }
   }
 
